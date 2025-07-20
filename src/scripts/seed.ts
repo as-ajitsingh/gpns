@@ -1,11 +1,11 @@
 import Admin from '../admin/admin.entity';
 import { ormOptions } from '../common/database/orm-options';
-import { DataSource } from 'typeorm';
+import { DataSource, DataSourceOptions } from 'typeorm';
 import * as bcrypt from 'bcrypt'
 import Country from '../country/country.entity';
 import Currency from '../currency/currency.entity';
 
-const dataSource = new DataSource(ormOptions);
+const dataSource = new DataSource(ormOptions as DataSourceOptions);
 
 async function seed() {
     await dataSource.initialize();

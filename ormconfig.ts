@@ -1,4 +1,8 @@
 import { ormOptions } from './src/common/database/orm-options';
-import { DataSource } from 'typeorm';
+import { DataSource, DataSourceOptions } from 'typeorm';
 
-export default new DataSource(ormOptions);
+export default new DataSource({
+    ...ormOptions as DataSourceOptions,
+    entities: ['src/**/*.entity.ts'],
+    migrations: ['src/migrations/*.ts']
+});

@@ -1,13 +1,14 @@
+import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { DataSourceOptions } from 'typeorm';
 
-export const ormOptions: DataSourceOptions = {
+export const ormOptions: TypeOrmModuleOptions = {
     type: 'postgres',
     host: 'localhost',
     port: 5432,
     username: 'postgres',
     password: 'psql-pwd',
     database: 'gpns',
-    entities: ['src/**/*.entity.ts'],
-    migrations: ['src/migrations/*.ts'],
+    autoLoadEntities: true,
     synchronize: false,
+    entities: []
 }

@@ -5,7 +5,7 @@ import Country from '../country/country.entity';
 @Entity()
 export default class Contractor extends BaseEntity {
     @Column()
-    name: string;
+    username: string;
 
     @Column()
     address: string;

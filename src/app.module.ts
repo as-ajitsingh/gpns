@@ -7,9 +7,17 @@ import { AdminModule } from './admin/admin.module';
 import { ContractorModule } from './contractor/contractor.module';
 import { CountryModule } from './country/country.module';
 import { CurrencyModule } from './currency/currency.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
-  imports: [TypeOrmModule.forRoot(ormOptions), AdminModule, ContractorModule, CountryModule, CurrencyModule],
+  imports: [
+    TypeOrmModule.forRoot(ormOptions),
+    AdminModule,
+    ContractorModule,
+    CountryModule,
+    CurrencyModule,
+    AuthModule
+  ],
   controllers: [AppController],
   providers: [AppService],
 })

@@ -4,7 +4,7 @@ import { BaseEntity } from '../common/database/base.entity';
 @Entity()
 export default class Admin extends BaseEntity {
     @Column()
-    name: string;
+    username: string;
 
     @Column()
     paswordHash: string;
