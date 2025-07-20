@@ -14,9 +14,9 @@ import { CustomConfigService } from '../config/configuration';
                 port: configService.get('DB_PORT'),
                 username: configService.get('DB_USERNAME'),
                 password: configService.get('DB_PASSWORD'),
-                database: configService.get('DB_USERNAME'),
-                autoLoadEntities: true,
+                database: configService.get('DB_NAME'),
                 synchronize: false,
+                autoLoadEntities: true,
                 entities: []
             })
         }),

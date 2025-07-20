@@ -3,6 +3,6 @@ import { DataSource, DataSourceOptions } from 'typeorm';
 
 export default new DataSource({
     ...ormOptions as DataSourceOptions,
-    entities: ['src/**/*.entity.ts'],
-    migrations: ['src/migrations/*.ts']
+    entities: ['./src/**/*.entity.ts'],
+    migrations: ['./src/migrations/*.ts']
 });

@@ -10,6 +10,7 @@ import { DatabaseModule } from './common/database/database.module';
 import { ConfigModule } from '@nestjs/config';
 import { validateEnv } from './common/config/configuration';
 import { HealthModule } from './health/health.module';
+import { CustomLoggerModule } from './common/custom-logger/custom-logger.module';
 
 @Module({
   imports: [
@@ -17,13 +18,15 @@ import { HealthModule } from './health/health.module';
       isGlobal: true,
       load: [() => validateEnv()]
     }),
+    CustomLoggerModule,
     AdminModule,
     ContractorModule,
     CountryModule,
     CurrencyModule,
     AuthModule,
     DatabaseModule,
-    HealthModule
+    HealthModule,
+    
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -5,13 +5,18 @@ import * as bcrypt from 'bcrypt'
 import Country from '../country/country.entity';
 import Currency from '../currency/currency.entity';
 
-const dataSource = new DataSource(ormOptions as DataSourceOptions);
+const dataSource = new DataSource({
+    ...ormOptions as DataSourceOptions,
+    entities: ['./src/**/*.entity.ts'],
+    migrations: ['./src/migrations/*.ts']
+});
 
 async function seed() {
     await dataSource.initialize();
+    console.log(dataSource.entityMetadatas.map(e => e.name));
 
     //adding admin user
-    const adminRepo = dataSource.getRepository(Admin).save({ name: 'Super Admin', paswordHash: await bcrypt.hash('admin$$pass', 10), isActive: true });
+    const adminRepo = dataSource.getRepository(Admin).save({ username: 'Super Admin', paswordHash: await bcrypt.hash('admin$$pass', 10), isActive: true });
 
     // seeding countries
     const countries = [

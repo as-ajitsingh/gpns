@@ -3,10 +3,14 @@ import { Repository } from 'typeorm';
 import Admin from './admin.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import * as bcrypt from 'bcrypt';
+import { InjectPinoLogger, PinoLogger } from 'nestjs-pino';
 
 @Injectable()
 export class AdminService {
-    constructor(@InjectRepository(Admin) private readonly adminRepository: Repository<Admin>) { }
+    constructor(
+        @InjectRepository(Admin) private readonly adminRepository: Repository<Admin>,
+        @InjectPinoLogger(AdminService.name) private readonly logger: PinoLogger,
+    ) { }
 
     async getAdmin(username: string, password: string) {
         const admin = await this.adminRepository.findOneBy({ username });
@@ -20,6 +24,7 @@ export class AdminService {
     }
 
     async getAllAdmins() {
+        this.logger.info('getting admins');
         return this.adminRepository.find();
     }
 }
