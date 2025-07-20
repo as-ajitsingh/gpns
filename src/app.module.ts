@@ -1,22 +1,27 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { ormOptions } from './common/database/orm-options';
 import { AdminModule } from './admin/admin.module';
 import { ContractorModule } from './contractor/contractor.module';
 import { CountryModule } from './country/country.module';
 import { CurrencyModule } from './currency/currency.module';
 import { AuthModule } from './auth/auth.module';
+import { DatabaseModule } from './common/database/database.module';
+import { ConfigModule } from '@nestjs/config';
+import { validateEnv } from './common/config/configuration';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot(ormOptions),
+    ConfigModule.forRoot({
+      isGlobal: true,
+      load: [() => validateEnv()]
+    }),
     AdminModule,
     ContractorModule,
     CountryModule,
     CurrencyModule,
-    AuthModule
+    AuthModule,
+    DatabaseModule
   ],
   controllers: [AppController],
   providers: [AppService],
