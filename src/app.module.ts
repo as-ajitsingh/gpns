@@ -9,6 +9,7 @@ import { AuthModule } from './auth/auth.module';
 import { DatabaseModule } from './common/database/database.module';
 import { ConfigModule } from '@nestjs/config';
 import { validateEnv } from './common/config/configuration';
+import { HealthModule } from './health/health.module';
 
 @Module({
   imports: [
@@ -21,7 +22,8 @@ import { validateEnv } from './common/config/configuration';
     CountryModule,
     CurrencyModule,
     AuthModule,
-    DatabaseModule
+    DatabaseModule,
+    HealthModule
   ],
   controllers: [AppController],
   providers: [AppService],
