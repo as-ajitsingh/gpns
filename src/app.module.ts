@@ -6,9 +6,10 @@ import { ormOptions } from './common/database/orm-options';
 import { AdminModule } from './admin/admin.module';
 import { ContractorModule } from './contractor/contractor.module';
 import { CountryModule } from './country/country.module';
+import { CurrencyModule } from './currency/currency.module';
 
 @Module({
-  imports: [TypeOrmModule.forRoot(ormOptions), AdminModule, ContractorModule, CountryModule],
+  imports: [TypeOrmModule.forRoot(ormOptions), AdminModule, ContractorModule, CountryModule, CurrencyModule],
   controllers: [AppController],
   providers: [AppService],
 })

@@ -3,6 +3,7 @@ import { ormOptions } from '../common/database/orm-options';
 import { DataSource } from 'typeorm';
 import * as bcrypt from 'bcrypt'
 import Country from '../country/country.entity';
+import Currency from '../currency/currency.entity';
 
 const dataSource = new DataSource(ormOptions);
 
@@ -65,6 +66,60 @@ async function seed() {
         { name: 'Egypt', code: 'EG' },
     ];
     await dataSource.getRepository(Country).save(countries);
+
+    //seeding currencies
+    const currencies = [
+        { code: 'USD', name: 'United States Dollar', symbol: '$' },
+        { code: 'EUR', name: 'Euro', symbol: '€' },
+        { code: 'GBP', name: 'British Pound Sterling', symbol: '£' },
+        { code: 'JPY', name: 'Japanese Yen', symbol: '¥' },
+        { code: 'INR', name: 'Indian Rupee', symbol: '₹' },
+        { code: 'AUD', name: 'Australian Dollar', symbol: 'A$' },
+        { code: 'CAD', name: 'Canadian Dollar', symbol: 'C$' },
+        { code: 'CHF', name: 'Swiss Franc', symbol: 'CHF' },
+        { code: 'CNY', name: 'Chinese Yuan', symbol: '¥' },
+        { code: 'SEK', name: 'Swedish Krona', symbol: 'kr' },
+        { code: 'NZD', name: 'New Zealand Dollar', symbol: 'NZ$' },
+        { code: 'SGD', name: 'Singapore Dollar', symbol: 'S$' },
+        { code: 'HKD', name: 'Hong Kong Dollar', symbol: 'HK$' },
+        { code: 'NOK', name: 'Norwegian Krone', symbol: 'kr' },
+        { code: 'KRW', name: 'South Korean Won', symbol: '₩' },
+        { code: 'TRY', name: 'Turkish Lira', symbol: '₺' },
+        { code: 'RUB', name: 'Russian Ruble', symbol: '₽' },
+        { code: 'ZAR', name: 'South African Rand', symbol: 'R' },
+        { code: 'BRL', name: 'Brazilian Real', symbol: 'R$' },
+        { code: 'MXN', name: 'Mexican Peso', symbol: '$' },
+        { code: 'IDR', name: 'Indonesian Rupiah', symbol: 'Rp' },
+        { code: 'MYR', name: 'Malaysian Ringgit', symbol: 'RM' },
+        { code: 'PHP', name: 'Philippine Peso', symbol: '₱' },
+        { code: 'THB', name: 'Thai Baht', symbol: '฿' },
+        { code: 'VND', name: 'Vietnamese Dong', symbol: '₫' },
+        { code: 'EGP', name: 'Egyptian Pound', symbol: '£' },
+        { code: 'SAR', name: 'Saudi Riyal', symbol: '﷼' },
+        { code: 'AED', name: 'UAE Dirham', symbol: 'د.إ' },
+        { code: 'PLN', name: 'Polish Zloty', symbol: 'zł' },
+        { code: 'DKK', name: 'Danish Krone', symbol: 'kr' },
+        { code: 'HUF', name: 'Hungarian Forint', symbol: 'Ft' },
+        { code: 'CZK', name: 'Czech Koruna', symbol: 'Kč' },
+        { code: 'ILS', name: 'Israeli New Shekel', symbol: '₪' },
+        { code: 'CLP', name: 'Chilean Peso', symbol: '$' },
+        { code: 'COP', name: 'Colombian Peso', symbol: '$' },
+        { code: 'PKR', name: 'Pakistani Rupee', symbol: '₨' },
+        { code: 'BDT', name: 'Bangladeshi Taka', symbol: '৳' },
+        { code: 'LKR', name: 'Sri Lankan Rupee', symbol: 'Rs' },
+        { code: 'NGN', name: 'Nigerian Naira', symbol: '₦' },
+        { code: 'KES', name: 'Kenyan Shilling', symbol: 'KSh' },
+        { code: 'GHS', name: 'Ghanaian Cedi', symbol: '₵' },
+        { code: 'TZS', name: 'Tanzanian Shilling', symbol: 'TSh' },
+        { code: 'UAH', name: 'Ukrainian Hryvnia', symbol: '₴' },
+        { code: 'QAR', name: 'Qatari Riyal', symbol: '﷼' },
+        { code: 'OMR', name: 'Omani Rial', symbol: '﷼' },
+        { code: 'KWD', name: 'Kuwaiti Dinar', symbol: 'د.ك' },
+        { code: 'BHD', name: 'Bahraini Dinar', symbol: 'ب.د' },
+        { code: 'JOD', name: 'Jordanian Dinar', symbol: 'د.ا' },
+    ];
+    await dataSource.getRepository(Currency).save(currencies);
+
 
     await dataSource.destroy();
 }
