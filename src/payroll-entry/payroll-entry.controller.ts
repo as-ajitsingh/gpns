@@ -21,8 +21,8 @@ export class PayrollEntryController {
 
     @Get(':id')
     @SetMetadata('roles', ['ADMIN', 'CONTRACTOR'])
-    async getPayrollById(@Param('id') id: string) {
-        return this.payrollEntryService.getPayrollEntry(id);
+    async getPayrollById(@Param('id') id: string, @RequestingUser() user) {
+        return this.payrollEntryService.getPayrollEntry(id, user.id, user.role);
     }
 
     @Post()

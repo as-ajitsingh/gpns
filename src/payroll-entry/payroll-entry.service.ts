@@ -28,8 +28,11 @@ export class PayrollEntryService {
             return this.payrollEntryRepository.find({ where: { contractor: { id: userId } } });
     }
 
-    async getPayrollEntry(id: PayrollEntry['id']) {
-        return this.payrollEntryRepository.findOneBy({ id });
+    async getPayrollEntry(id: PayrollEntry['id'], userId: string, userRole: 'ADMIN' | 'CONTRACTOR') {
+        if (userRole === 'ADMIN')
+            return this.payrollEntryRepository.findOneBy({ id });
+        else
+            return this.payrollEntryRepository.findOne({ where: { id, contractor: { id: userId } } });
     }
 
     async createPayrollEntry(payrollEntryDto: PayrollEntryCreateRequestDto, adminId: Admin['id']) {
