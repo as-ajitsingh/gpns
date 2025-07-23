@@ -23,6 +23,14 @@ export class AdminService {
 
     }
 
+    async getAdminById(id: Admin['id']) {
+        const admin = await this.adminRepository.findOneBy({ id });
+
+        if (!admin) throw new Error('admin not found for id: ' + id);
+
+        return admin;
+    }
+
     async getAllAdmins() {
         this.logger.info('getting admins');
         return this.adminRepository.find();

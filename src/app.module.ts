@@ -11,6 +11,7 @@ import { ConfigModule } from '@nestjs/config';
 import { validateEnv } from './common/config/configuration';
 import { HealthModule } from './health/health.module';
 import { CustomLoggerModule } from './common/custom-logger/custom-logger.module';
+import { PayrollEntryModule } from './payroll-entry/payroll-entry.module';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { CustomLoggerModule } from './common/custom-logger/custom-logger.module'
     AuthModule,
     DatabaseModule,
     HealthModule,
+    PayrollEntryModule,
     
   ],
   controllers: [AppController],

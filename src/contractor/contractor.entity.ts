@@ -1,6 +1,7 @@
 import { Column, Entity, ManyToOne } from 'typeorm';
 import { BaseEntity } from '../common/database/base.entity';
 import Country from '../country/country.entity';
+import { Exclude } from 'class-transformer';
 
 @Entity()
 export default class Contractor extends BaseEntity {
@@ -11,6 +12,7 @@ export default class Contractor extends BaseEntity {
     address: string;
 
     @Column()
+    @Exclude()
     passwordHash: string;
 
     @Column()

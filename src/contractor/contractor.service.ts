@@ -19,4 +19,12 @@ export class ContractorService {
         return contractor;
 
     }
+
+    async getContractorById(id: Contractor['id']) {
+        const contractor = await this.contractorRepository.findOneBy({ id });
+        
+        if (!contractor) throw new Error('contractor not found for id: ' + id);
+
+        return contractor;
+    }
 }
