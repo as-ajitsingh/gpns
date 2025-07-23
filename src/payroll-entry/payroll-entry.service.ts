@@ -5,10 +5,10 @@ import { Repository } from 'typeorm';
 import { InjectPinoLogger, PinoLogger } from 'nestjs-pino';
 import { AdminService } from '../admin/admin.service';
 import Admin from '../admin/admin.entity';
-import { PayrollEntryRequestDto } from './payroll-entry.request.dto';
-import Contractor from '../contractor/contractor.entity';
+import { PayrollEntryCreateRequestDto } from './dtos/payroll-entry.create-request.dto';
 import { ContractorService } from '../contractor/contractor.service';
 import { CurrencyService } from '../currency/currency.service';
+import { PayrollEntryUpdateRequestDto } from './dtos/payroll-entry.update-request.dto';
 
 @Injectable()
 export class PayrollEntryService {
@@ -21,15 +21,18 @@ export class PayrollEntryService {
         @InjectPinoLogger(AdminService.name) private readonly logger: PinoLogger
     ) { }
 
-    async getAllPayrollEntries() {
-        return this.payrollEntryRepository.find();
+    async getAllPayrollEntries(userId: string, role: 'ADMIN' | 'CONTRACTOR') {
+        if (role === 'ADMIN')
+            return this.payrollEntryRepository.find();
+        else
+            return this.payrollEntryRepository.find({ where: { contractor: { id: userId } } });
     }
 
     async getPayrollEntry(id: PayrollEntry['id']) {
         return this.payrollEntryRepository.findOneBy({ id });
     }
 
-    async createPayrollEntry(payrollEntryDto: PayrollEntryRequestDto, adminId: Admin['id']) {
+    async createPayrollEntry(payrollEntryDto: PayrollEntryCreateRequestDto, adminId: Admin['id']) {
         const payrollEntry = new PayrollEntry();
         payrollEntry.startDate = payrollEntryDto.startDate;
         payrollEntry.endDate = payrollEntryDto.endDate;
@@ -41,9 +44,30 @@ export class PayrollEntryService {
         payrollEntry.addedBy = await this.adminService.getAdminById(adminId);
         payrollEntry.currency = await this.currencyService.getByCode(payrollEntryDto.currencyCode);
 
-        const result = await this.payrollEntryRepository.save(payrollEntry);
-        console.log('>>>', result);
-        return result;
+        return this.payrollEntryRepository.save(payrollEntry);
 
+    }
+
+    async updatePayrollEntry(id: PayrollEntry['id'], payrollEntryUpdateDto: PayrollEntryUpdateRequestDto) {
+        const payrollEntry = await this.payrollEntryRepository.findOneBy({ id });
+        if (!payrollEntry) throw new Error('payroll entry not found for id: ' + id);
+
+        if (payrollEntryUpdateDto.startDate) payrollEntry.startDate = payrollEntryUpdateDto.startDate;
+        if (payrollEntryUpdateDto.endDate) payrollEntry.endDate = payrollEntryUpdateDto.endDate;
+        if (payrollEntryUpdateDto.comments) payrollEntry.comments = payrollEntryUpdateDto.comments;
+        if (payrollEntryUpdateDto.payoutDate) payrollEntry.payoutDate = payrollEntryUpdateDto.payoutDate;
+        if (payrollEntryUpdateDto.amount) payrollEntry.amount = payrollEntryUpdateDto.amount;
+
+        if (payrollEntryUpdateDto.contractorId)
+            payrollEntry.contractor = await this.contractorService.getContractorById(payrollEntryUpdateDto.contractorId);
+        if (payrollEntryUpdateDto.currencyCode)
+            payrollEntry.currency = await this.currencyService.getByCode(payrollEntryUpdateDto.currencyCode);
+
+        return this.payrollEntryRepository.save(payrollEntry);
+    }
+
+
+    async deletePayrollEntry(id: PayrollEntry['id']) {
+        return this.payrollEntryRepository.delete({ id });
     }
 }

@@ -1,9 +1,10 @@
 import Admin from '../admin/admin.entity';
-import { ormOptions } from '../common/database/orm-options';
 import { DataSource, DataSourceOptions } from 'typeorm';
 import * as bcrypt from 'bcrypt'
 import Country from '../country/country.entity';
 import Currency from '../currency/currency.entity';
+import Contractor from '../contractor/contractor.entity';
+import { ormOptions } from '../../ormconfig';
 
 const dataSource = new DataSource({
     ...ormOptions as DataSourceOptions,
@@ -16,7 +17,7 @@ async function seed() {
     console.log(dataSource.entityMetadatas.map(e => e.name));
 
     //adding admin user
-    const adminRepo = dataSource.getRepository(Admin).save({ username: 'Super Admin', paswordHash: await bcrypt.hash('admin$$pass', 10), isActive: true });
+    await dataSource.getRepository(Admin).save({ username: 'Super Admin', paswordHash: await bcrypt.hash('admin$$pass', 10), isActive: true });
 
     // seeding countries
     const countries = [
@@ -124,6 +125,27 @@ async function seed() {
         { code: 'JOD', name: 'Jordanian Dinar', symbol: 'د.ا' },
     ];
     await dataSource.getRepository(Currency).save(currencies);
+
+    //adding contractors
+    await dataSource.getRepository(Contractor).save({
+        username: 'Bob kumar',
+        passwordHash: await bcrypt.hash('pass$$word', 10),
+        address: "somewhere in california",
+        startDate: new Date('2025-07-01'),
+        endDate: new Date('2025-12-31'),
+        contractType: 'permanent',
+        country: await dataSource.getRepository(Country).findOneByOrFail({ code: 'US' })
+    });
+
+    await dataSource.getRepository(Contractor).save({
+        username: 'Kumari alice',
+        passwordHash: await bcrypt.hash('pass@@word', 10),
+        address: "somewhere in london",
+        startDate: new Date('2025-06-01'),
+        endDate: new Date('2025-10-31'),
+        contractType: 'contract',
+        country: await dataSource.getRepository(Country).findOneByOrFail({ code: 'UK' })
+    });
 
 
     await dataSource.destroy();

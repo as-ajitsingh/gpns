@@ -1,4 +1,4 @@
-export class PayrollEntryRequestDto {
+export class PayrollEntryCreateRequestDto {
     contractorId: string;
     startDate: Date;
     endDate: Date;
