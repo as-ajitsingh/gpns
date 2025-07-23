@@ -17,7 +17,7 @@ export class AdminService {
 
         if (!admin) throw new Error('admin not found');
 
-        if (!await bcrypt.compare(password, admin.paswordHash)) throw new Error('unauthorized');
+        if (!await bcrypt.compare(password, admin.passwordHash)) throw new Error('unauthorized');
 
         return admin;
 

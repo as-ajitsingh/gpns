@@ -5,7 +5,7 @@ import { Exclude } from 'class-transformer';
 
 @Entity()
 export default class Contractor extends BaseEntity {
-    @Column()
+    @Column({ unique: true })
     username: string;
 
     @Column()

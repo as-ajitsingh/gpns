@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, SetMetadata, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, Param, Patch, Post, Response, SetMetadata, UseGuards } from '@nestjs/common';
 import { PayrollEntryService } from './payroll-entry.service';
 import { PayrollEntryCreateRequestDto } from './dtos/payroll-entry.create-request.dto';
 import { AuthGuard } from '../auth/auth.guard';
@@ -27,8 +27,9 @@ export class PayrollEntryController {
 
     @Post()
     @SetMetadata('roles', ['ADMIN'])
+    @HttpCode(201)
     async createPayrollEntry(@Body() payrollEntryRequestDto: PayrollEntryCreateRequestDto, @RequestingUser() user) {
-        return this.payrollEntryService.createPayrollEntry(payrollEntryRequestDto, user);
+        return this.payrollEntryService.createPayrollEntry(payrollEntryRequestDto, user.id);
     }
 
     @Patch(':id')

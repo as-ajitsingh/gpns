@@ -17,7 +17,7 @@ async function seed() {
     console.log(dataSource.entityMetadatas.map(e => e.name));
 
     //adding admin user
-    await dataSource.getRepository(Admin).save({ username: 'Super Admin', paswordHash: await bcrypt.hash('admin$$pass', 10), isActive: true });
+    await dataSource.getRepository(Admin).save({ username: 'Super Admin', passwordHash: await bcrypt.hash('admin$$pass', 10), isActive: true });
 
     // seeding countries
     const countries = [
