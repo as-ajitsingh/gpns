@@ -1,0 +1,223 @@
+{
+	"info": {
+		"_postman_id": "cca2e4bb-6ff9-4d74-bbfc-be9e120f94e5",
+		"name": "Global Payroll Notification System (Practice Problem)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "1136556"
+	},
+	"item": [
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\":\"Kumari alice\",\n    \"password\":\"pass@@word\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/auth/login",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create payroll entries",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJTdXBlciBBZG1pbiIsInJvbGUiOiJBRE1JTiIsImlkIjoiMzRiZDA3NWItMzFhMi00OGQ2LTgwOWEtODUxMmNjNjllMzA0IiwiaWF0IjoxNzUzMjc2MTA2LCJleHAiOjE3NTM4ODA5MDZ9.5PqjBxWMiCbWjeKNqKy71u9QFlRQosB5vXmZoauLbCo",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"contractorId\": \"6617f7db-e3f2-41d7-aded-bd0bac29373e\",\n    \"startDate\": \"2025-09-01\",\n    \"endDate\": \"2025-09-30\",\n    \"payoutDate\": \"2025-09-30\",\n    \"amount\": \"20000\",\n    \"currencyCode\": \"USD\",\n    \"comments\": \"Alice is cool\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/payroll-entry",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"payroll-entry"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all payroll entries",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJLdW1hcmkgYWxpY2UiLCJyb2xlIjoiQ09OVFJBQ1RPUiIsImlkIjoiNjYxN2Y3ZGItZTNmMi00MWQ3LWFkZWQtYmQwYmFjMjkzNzNlIiwiaWF0IjoxNzUzMjc2MTQwLCJleHAiOjE3NTM4ODA5NDB9.NstSecupg4WD2nUd7hEm35N2-Gst0FzQPDvQX9DaVz4",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/payroll-entry",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"payroll-entry"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get payroll entry",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJLdW1hcmkgYWxpY2UiLCJyb2xlIjoiQ09OVFJBQ1RPUiIsImlkIjoiNjYxN2Y3ZGItZTNmMi00MWQ3LWFkZWQtYmQwYmFjMjkzNzNlIiwiaWF0IjoxNzUzMjc2MTQwLCJleHAiOjE3NTM4ODA5NDB9.NstSecupg4WD2nUd7hEm35N2-Gst0FzQPDvQX9DaVz4",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/payroll-entry/f964f80e-00e3-4eac-9264-4d98bbc9fa5a",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"payroll-entry",
+						"f964f80e-00e3-4eac-9264-4d98bbc9fa5a"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete payroll entry",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJCb2Iga3VtYXIiLCJyb2xlIjoiQ09OVFJBQ1RPUiIsImlkIjoiN2MxOWU0MzEtMGIyMi00OTNmLTgzZTYtNDZlNWZlNDhmNDk4IiwiaWF0IjoxNzUzMjc2MDgwLCJleHAiOjE3NTM4ODA4ODB9.kn7KZta2xLIwVpzvw_OrGQtMIFRuLbhxgkCZRxxR22M",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/payroll-entry/f964f80e-00e3-4eac-9264-4d98bbc9fa5a",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"payroll-entry",
+						"f964f80e-00e3-4eac-9264-4d98bbc9fa5a"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update payroll entry",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJTdXBlciBBZG1pbiIsInJvbGUiOiJBRE1JTiIsImlkIjoiMzRiZDA3NWItMzFhMi00OGQ2LTgwOWEtODUxMmNjNjllMzA0IiwiaWF0IjoxNzUzMjc2MTA2LCJleHAiOjE3NTM4ODA5MDZ9.5PqjBxWMiCbWjeKNqKy71u9QFlRQosB5vXmZoauLbCo",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"startDate\": \"2025-05-01\",\n    \"endDate\": \"2025-08-31\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/payroll-entry/f964f80e-00e3-4eac-9264-4d98bbc9fa5a",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"payroll-entry",
+						"f964f80e-00e3-4eac-9264-4d98bbc9fa5a"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "health",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-correlation-id",
+						"value": "sample-cor-id",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:3000/health",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"health"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
