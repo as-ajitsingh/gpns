@@ -1,4 +1,4 @@
-import { Injectable, LoggerService } from '@nestjs/common';
+import { Injectable, LoggerService, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { PayrollEntry } from './payroll-entry.entity';
 import { Repository } from 'typeorm';
@@ -28,11 +28,23 @@ export class PayrollEntryService {
             return this.payrollEntryRepository.find({ where: { contractor: { id: userId } } });
     }
 
-    async getPayrollEntry(id: PayrollEntry['id'], userId: string, userRole: 'ADMIN' | 'CONTRACTOR') {
-        if (userRole === 'ADMIN')
-            return this.payrollEntryRepository.findOneBy({ id });
-        else
-            return this.payrollEntryRepository.findOne({ where: { id, contractor: { id: userId } } });
+    async getPayrollEntry(
+        id: PayrollEntry['id'],
+        userId: string,
+        userRole: 'ADMIN' | 'CONTRACTOR',
+    ) {
+        let payrollEntry: PayrollEntry | null;
+        if (userRole === 'ADMIN') {
+            payrollEntry = await this.payrollEntryRepository.findOneBy({ id });
+        } else {
+            payrollEntry = await this.payrollEntryRepository.findOne({
+                where: { id, contractor: { id: userId } },
+            });
+        }
+        if (!payrollEntry) {
+            throw new NotFoundException(`Payroll entry not found for id: ${id}`);
+        }
+        return payrollEntry;
     }
 
     async createPayrollEntry(payrollEntryDto: PayrollEntryCreateRequestDto, adminId: Admin['id']) {
@@ -53,7 +65,7 @@ export class PayrollEntryService {
 
     async updatePayrollEntry(id: PayrollEntry['id'], payrollEntryUpdateDto: PayrollEntryUpdateRequestDto) {
         const payrollEntry = await this.payrollEntryRepository.findOneBy({ id });
-        if (!payrollEntry) throw new Error('payroll entry not found for id: ' + id);
+        if (!payrollEntry) throw new NotFoundException(`Payroll entry not found for id: ${id}`);
 
         if (payrollEntryUpdateDto.startDate) payrollEntry.startDate = payrollEntryUpdateDto.startDate;
         if (payrollEntryUpdateDto.endDate) payrollEntry.endDate = payrollEntryUpdateDto.endDate;
@@ -71,6 +83,8 @@ export class PayrollEntryService {
 
 
     async deletePayrollEntry(id: PayrollEntry['id']) {
+       const payrollEntry= await this.payrollEntryRepository.findOneBy({ id });
+        if (!payrollEntry) throw new NotFoundException(`Payroll entry not found for id: ${id}`);
         return this.payrollEntryRepository.delete({ id });
     }
 }
